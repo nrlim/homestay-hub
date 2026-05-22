@@ -91,6 +91,11 @@ export function RoomManagement({ homestay, rooms, totalPages, currentPage }: { h
                 {state?.errors?.facilities && <p className="text-sm text-red-500">{state.errors.facilities[0]}</p>}
                 <p className="text-xs text-zinc-500">Separate multiple facilities with commas.</p>
               </div>
+              <div className="space-y-2">
+                <Label htmlFor="image">Room Image</Label>
+                <Input id="image" name="image" type="file" accept="image/*" />
+                {state?.errors?.image && <p className="text-sm text-red-500">{state.errors.image[0]}</p>}
+              </div>
               <Button type="submit" className="w-full" disabled={pending}>
                 {pending ? 'Saving...' : 'Save Room'}
               </Button>

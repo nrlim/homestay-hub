@@ -26,6 +26,7 @@ export const RoomSchema = z.object({
   type: z.string().min(2, 'Room type is required'),
   pricePerNight: z.string().refine((val) => !isNaN(Number(val)) && Number(val) > 0, 'Must be a positive number'),
   facilities: z.string().optional(),
+  image: z.any().optional(),
 })
 
 export type RoomFormState =
@@ -35,6 +36,7 @@ export type RoomFormState =
         type?: string[]
         pricePerNight?: string[]
         facilities?: string[]
+        image?: string[]
       }
       message?: string
     }

@@ -4,6 +4,7 @@ import prisma from '@/lib/prisma'
 import { requireAdmin } from '@/lib/auth'
 import { RoomSchema, RoomFormState } from '@/lib/validations/homestay'
 import { revalidatePath } from 'next/cache'
+import { supabaseServer } from '@/lib/supabase'
 
 export async function createRoom(homestayId: string, state: RoomFormState, formData: FormData): Promise<RoomFormState> {
   await requireAdmin()
@@ -29,7 +30,33 @@ export async function createRoom(homestayId: string, state: RoomFormState, formD
     ? facilities.split(',').map(f => f.trim()).filter(f => f.length > 0)
     : []
 
+  const imageFile = formData.get('image') as File | null
+  let roomImageUrl: string | undefined = undefined
+
   try {
+    if (imageFile && imageFile.size > 0 && imageFile.type.startsWith('image/')) {
+      const buffer = Buffer.from(await imageFile.arrayBuffer())
+      const fileName = `${Date.now()}-${imageFile.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`
+      
+      const { error } = await supabaseServer.storage
+        .from('homestay-bucket')
+        .upload(`rooms/${fileName}`, buffer, {
+          contentType: imageFile.type,
+          upsert: false
+        })
+
+      if (error) {
+        console.error('Supabase upload error:', error)
+        throw new Error('Failed to upload room image')
+      }
+
+      const { data: publicUrlData } = supabaseServer.storage
+        .from('homestay-bucket')
+        .getPublicUrl(`rooms/${fileName}`)
+
+      roomImageUrl = publicUrlData.publicUrl
+    }
+
     await prisma.room.create({
       data: {
         homestayId,
@@ -37,6 +64,7 @@ export async function createRoom(homestayId: string, state: RoomFormState, formD
         type,
         pricePerNight: parseInt(pricePerNight),
         facilities: facilitiesArray,
+        image: roomImageUrl,
         isAvailable: true,
       }
     })
