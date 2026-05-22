@@ -1,0 +1,142 @@
+[
+  {
+    "name": "Tropical Villa Bali Seminyak",
+    "description": "A stunning modern tropical villa located in the heart of Seminyak, Bali. Featuring a private pool, lush green surroundings, and close proximity to the beach and top restaurants.",
+    "location": "Bali, Indonesia",
+    "address": "Jl. Kayu Aya No. 12, Seminyak, Bali",
+    "image": "homestay_bali_villa_1779477488563.png",
+    "rooms": [
+      { "roomNumber": "A101", "type": "Standard", "pricePerNight": 450000, "image": "room_standard_1779477569007.png" },
+      { "roomNumber": "A102", "type": "Deluxe", "pricePerNight": 750000, "image": "room_deluxe_1779477583477.png" },
+      { "roomNumber": "A103", "type": "Family", "pricePerNight": 1200000, "image": "room_family_1779477596961.png" },
+      { "roomNumber": "A104", "type": "Suite", "pricePerNight": 2000000, "image": "room_suite_1779477609776.png" },
+      { "roomNumber": "A105", "type": "Dormitory", "pricePerNight": 150000, "image": "room_dorm_1779477624221.png" }
+    ]
+  },
+  {
+    "name": "Ubud Jungle Retreat",
+    "description": "Escape the city hustle and relax in our luxurious tropical villa surrounded by the lush jungles and serene rivers of Ubud. Perfect for a peaceful getaway.",
+    "location": "Bali, Indonesia",
+    "address": "Jl. Raya Campuhan, Ubud, Bali",
+    "image": "homestay_bali_villa_1779477488563.png",
+    "rooms": [
+      { "roomNumber": "U101", "type": "Standard", "pricePerNight": 500000, "image": "room_standard_1779477569007.png" },
+      { "roomNumber": "U102", "type": "Deluxe", "pricePerNight": 850000, "image": "room_deluxe_1779477583477.png" },
+      { "roomNumber": "U103", "type": "Family", "pricePerNight": 1300000, "image": "room_family_1779477596961.png" },
+      { "roomNumber": "U104", "type": "Suite", "pricePerNight": 2200000, "image": "room_suite_1779477609776.png" },
+      { "roomNumber": "U105", "type": "Dormitory", "pricePerNight": 175000, "image": "room_dorm_1779477624221.png" }
+    ]
+  },
+  {
+    "name": "Pine Cabin Lembang",
+    "description": "Experience the chilly, misty mornings of Lembang in our cozy wooden cabin. Surrounded by pine trees, it's the perfect spot for family holidays or romantic escapes.",
+    "location": "Bandung, Indonesia",
+    "address": "Jl. Raya Tangkuban Perahu Km. 8, Lembang, Bandung",
+    "image": "homestay_bandung_cabin_1779477503358.png",
+    "rooms": [
+      { "roomNumber": "C101", "type": "Standard", "pricePerNight": 350000, "image": "room_standard_1779477569007.png" },
+      { "roomNumber": "C102", "type": "Deluxe", "pricePerNight": 600000, "image": "room_deluxe_1779477583477.png" },
+      { "roomNumber": "C103", "type": "Family", "pricePerNight": 950000, "image": "room_family_1779477596961.png" },
+      { "roomNumber": "C104", "type": "Suite", "pricePerNight": 1500000, "image": "room_suite_1779477609776.png" },
+      { "roomNumber": "C105", "type": "Dormitory", "pricePerNight": 125000, "image": "room_dorm_1779477624221.png" }
+    ]
+  },
+  {
+    "name": "Pangalengan Foggy Lodge",
+    "description": "A secluded wooden cabin lodge nestled in the foggy tea plantations of Pangalengan. Experience true tranquility and nature at its best.",
+    "location": "Bandung, Indonesia",
+    "address": "Jl. Situ Cileunca, Pangalengan, Bandung",
+    "image": "homestay_bandung_cabin_1779477503358.png",
+    "rooms": [
+      { "roomNumber": "L1", "type": "Standard", "pricePerNight": 300000, "image": "room_standard_1779477569007.png" },
+      { "roomNumber": "L2", "type": "Deluxe", "pricePerNight": 550000, "image": "room_deluxe_1779477583477.png" },
+      { "roomNumber": "L3", "type": "Family", "pricePerNight": 900000, "image": "room_family_1779477596961.png" },
+      { "roomNumber": "L4", "type": "Suite", "pricePerNight": 1400000, "image": "room_suite_1779477609776.png" },
+      { "roomNumber": "L5", "type": "Dormitory", "pricePerNight": 100000, "image": "room_dorm_1779477624221.png" }
+    ]
+  },
+  {
+    "name": "Royal Joglo Homestay",
+    "description": "Step into the past with this luxurious Javanese Joglo house. Rich in cultural heritage, wooden carvings, and surrounded by beautiful rice paddies just minutes from Malioboro.",
+    "location": "Yogyakarta, Indonesia",
+    "address": "Jl. Prawirotaman No. 45, Yogyakarta",
+    "image": "homestay_jogja_joglo_1779477517326.png",
+    "rooms": [
+      { "roomNumber": "J101", "type": "Standard", "pricePerNight": 400000, "image": "room_standard_1779477569007.png" },
+      { "roomNumber": "J102", "type": "Deluxe", "pricePerNight": 700000, "image": "room_deluxe_1779477583477.png" },
+      { "roomNumber": "J103", "type": "Family", "pricePerNight": 1100000, "image": "room_family_1779477596961.png" },
+      { "roomNumber": "J104", "type": "Suite", "pricePerNight": 1800000, "image": "room_suite_1779477609776.png" },
+      { "roomNumber": "J105", "type": "Dormitory", "pricePerNight": 135000, "image": "room_dorm_1779477624221.png" }
+    ]
+  },
+  {
+    "name": "Prambanan Heritage Villa",
+    "description": "A serene traditional Javanese homestay offering an authentic cultural experience with a majestic view of the Prambanan temple from a distance.",
+    "location": "Yogyakarta, Indonesia",
+    "address": "Jl. Raya Solo - Yogyakarta Km. 16, Prambanan",
+    "image": "homestay_jogja_joglo_1779477517326.png",
+    "rooms": [
+      { "roomNumber": "P1", "type": "Standard", "pricePerNight": 380000, "image": "room_standard_1779477569007.png" },
+      { "roomNumber": "P2", "type": "Deluxe", "pricePerNight": 650000, "image": "room_deluxe_1779477583477.png" },
+      { "roomNumber": "P3", "type": "Family", "pricePerNight": 1050000, "image": "room_family_1779477596961.png" },
+      { "roomNumber": "P4", "type": "Suite", "pricePerNight": 1700000, "image": "room_suite_1779477609776.png" },
+      { "roomNumber": "P5", "type": "Dormitory", "pricePerNight": 120000, "image": "room_dorm_1779477624221.png" }
+    ]
+  },
+  {
+    "name": "Skyline Sudirman Apartment",
+    "description": "A premium, fully-furnished modern apartment in the heart of Jakarta's business district. Perfect for business travelers offering stunning sunset views.",
+    "location": "Jakarta, Indonesia",
+    "address": "Jl. Jend. Sudirman Kav. 50, Jakarta Selatan",
+    "image": "homestay_jakarta_apartment_1779477530248.png",
+    "rooms": [
+      { "roomNumber": "S20A", "type": "Standard", "pricePerNight": 600000, "image": "room_standard_1779477569007.png" },
+      { "roomNumber": "S20B", "type": "Deluxe", "pricePerNight": 950000, "image": "room_deluxe_1779477583477.png" },
+      { "roomNumber": "S20C", "type": "Family", "pricePerNight": 1500000, "image": "room_family_1779477596961.png" },
+      { "roomNumber": "S20D", "type": "Suite", "pricePerNight": 2500000, "image": "room_suite_1779477609776.png" },
+      { "roomNumber": "S20E", "type": "Dormitory", "pricePerNight": 200000, "image": "room_dorm_1779477624221.png" }
+    ]
+  },
+  {
+    "name": "Kuningan Executive Suites",
+    "description": "High-rise luxury living with a beautiful glass facade. Located strategically near embassies and premium shopping malls in Mega Kuningan.",
+    "location": "Jakarta, Indonesia",
+    "address": "Kawasan Mega Kuningan, Jakarta Selatan",
+    "image": "homestay_jakarta_apartment_1779477530248.png",
+    "rooms": [
+      { "roomNumber": "K15-1", "type": "Standard", "pricePerNight": 550000, "image": "room_standard_1779477569007.png" },
+      { "roomNumber": "K15-2", "type": "Deluxe", "pricePerNight": 850000, "image": "room_deluxe_1779477583477.png" },
+      { "roomNumber": "K15-3", "type": "Family", "pricePerNight": 1400000, "image": "room_family_1779477596961.png" },
+      { "roomNumber": "K15-4", "type": "Suite", "pricePerNight": 2300000, "image": "room_suite_1779477609776.png" },
+      { "roomNumber": "K15-5", "type": "Dormitory", "pricePerNight": 180000, "image": "room_dorm_1779477624221.png" }
+    ]
+  },
+  {
+    "name": "Gili Trawangan Beach House",
+    "description": "A stunning bohemian beach house located right on the white sands of Gili Trawangan. Wake up to the sound of waves and turquoise waters.",
+    "location": "Lombok, Indonesia",
+    "address": "Jl. Pantai Gili Trawangan, Lombok Utara",
+    "image": "homestay_lombok_beachhouse_1779477545044.png",
+    "rooms": [
+      { "roomNumber": "GT01", "type": "Standard", "pricePerNight": 400000, "image": "room_standard_1779477569007.png" },
+      { "roomNumber": "GT02", "type": "Deluxe", "pricePerNight": 750000, "image": "room_deluxe_1779477583477.png" },
+      { "roomNumber": "GT03", "type": "Family", "pricePerNight": 1150000, "image": "room_family_1779477596961.png" },
+      { "roomNumber": "GT04", "type": "Suite", "pricePerNight": 1900000, "image": "room_suite_1779477609776.png" },
+      { "roomNumber": "GT05", "type": "Dormitory", "pricePerNight": 150000, "image": "room_dorm_1779477624221.png" }
+    ]
+  },
+  {
+    "name": "Kuta Lombok Surf Shack",
+    "description": "A laid-back, beautiful tropical surf house near the best surfing spots in Kuta, Lombok. Enjoy hammocks, cold coconuts, and a vibrant traveler community.",
+    "location": "Lombok, Indonesia",
+    "address": "Jl. Pariwisata Pantai Kuta, Lombok Tengah",
+    "image": "homestay_lombok_beachhouse_1779477545044.png",
+    "rooms": [
+      { "roomNumber": "KL1", "type": "Standard", "pricePerNight": 300000, "image": "room_standard_1779477569007.png" },
+      { "roomNumber": "KL2", "type": "Deluxe", "pricePerNight": 500000, "image": "room_deluxe_1779477583477.png" },
+      { "roomNumber": "KL3", "type": "Family", "pricePerNight": 850000, "image": "room_family_1779477596961.png" },
+      { "roomNumber": "KL4", "type": "Suite", "pricePerNight": 1300000, "image": "room_suite_1779477609776.png" },
+      { "roomNumber": "KL5", "type": "Dormitory", "pricePerNight": 100000, "image": "room_dorm_1779477624221.png" }
+    ]
+  }
+]

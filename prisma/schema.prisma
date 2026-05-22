@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum TransactionStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+model User {
+  id           String        @id @default(cuid())
+  email        String        @unique
+  passwordHash String
+  name         String
+  role         Role          @default(USER)
+  createdAt    DateTime      @default(now())
+  transactions Transaction[]
+}
+
+model Homestay {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  location    String
+  address     String
+  images      String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  rooms       Room[]
+}
+
+model Room {
+  id            String        @id @default(cuid())
+  homestayId    String
+  roomNumber    String
+  type          String
+  pricePerNight Int
+  facilities    String[]      @default([])
+  image         String?
+  isAvailable   Boolean       @default(true)
+  homestay      Homestay      @relation(fields: [homestayId], references: [id], onDelete: Cascade)
+  bookingItems  BookingItem[]
+}
+
+model Transaction {
+  id           String            @id @default(cuid())
+  userId       String
+  totalPrice   Int
+  status       TransactionStatus @default(PENDING)
+  checkIn      DateTime
+  checkOut     DateTime
+  createdAt    DateTime          @default(now())
+  user         User              @relation(fields: [userId], references: [id])
+  bookingItems BookingItem[]
+}
+
+model BookingItem {
+  id             String      @id @default(cuid())
+  transactionId  String
+  roomId         String
+  priceAtBooking Int
+  transaction    Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  room           Room        @relation(fields: [roomId], references: [id])
+}
