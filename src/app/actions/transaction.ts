@@ -2,13 +2,21 @@
 'use server'
 
 import prisma from '@/lib/prisma'
+import { getSession } from '@/lib/session'
 import { requireAuth } from '@/lib/auth'
 import { BookingSchema, BookingFormState } from '@/lib/validations/booking'
-import { redirect } from 'next/navigation'
 import { differenceInDays } from 'date-fns'
+import { sendBookingConfirmationEmail } from '@/lib/nodemailer'
 
 export async function createBooking(state: BookingFormState, formData: FormData): Promise<BookingFormState> {
-  const session = await requireAuth()
+  const session = await getSession()
+
+  if (!session) {
+    // Return redirect URL to the client so it can save booking state before redirecting
+    const homestayId = String(formData.get('homestayId') || '')
+    const redirectTo = homestayId ? `/login?next=/homestays/${homestayId}` : '/login'
+    return { message: 'redirect_to_login', redirectTo }
+  }
 
   const roomIds = formData.getAll('roomIds').map(id => String(id))
 
@@ -103,6 +111,21 @@ export async function checkTransactionStatus(transactionId: string) {
   return tx?.status || 'PENDING'
 }
 
+export async function markTransactionAsUnpaid(transactionId: string) {
+  const session = await requireAuth()
+  
+  const tx = await prisma.transaction.findUnique({
+    where: { id: transactionId, userId: session.userId }
+  })
+  
+  if (tx && tx.status === 'PENDING') {
+    await prisma.transaction.update({
+      where: { id: transactionId },
+      data: { status: 'UNPAID' }
+    })
+  }
+}
+
 export async function updateTransactionStatus(transactionId: string, status: 'PENDING' | 'CONFIRMED' | 'CANCELLED' | 'COMPLETED') {
   const session = await requireAuth()
   if (session.role !== 'ADMIN') throw new Error('Unauthorized')
@@ -111,4 +134,105 @@ export async function updateTransactionStatus(transactionId: string, status: 'PE
     where: { id: transactionId },
     data: { status }
   })
+
+  // Send confirmation email when booking is confirmed
+  if (status === 'CONFIRMED') {
+    try {
+      const transaction = await prisma.transaction.findUnique({
+        where: { id: transactionId },
+        include: {
+          user: { select: { name: true, email: true } },
+          bookingItems: {
+            include: {
+              room: {
+                include: { homestay: true }
+              }
+            }
+          }
+        }
+      })
+
+      if (transaction && transaction.user.email) {
+        const homestay = transaction.bookingItems[0]?.room.homestay
+        await sendBookingConfirmationEmail({
+          to: transaction.user.email,
+          userName: transaction.user.name,
+          homestayName: homestay?.name || 'Homestay',
+          homestayAddress: homestay?.address || '',
+          checkIn: transaction.checkIn,
+          checkOut: transaction.checkOut,
+          rooms: transaction.bookingItems.map(item => ({
+            roomNumber: item.room.roomNumber,
+            type: item.room.type,
+            priceAtBooking: item.priceAtBooking,
+          })),
+          totalPrice: transaction.totalPrice,
+          transactionId: transaction.id,
+        })
+      }
+    } catch (emailError) {
+      // Don't fail the status update if email fails
+      console.error('Failed to send confirmation email:', emailError)
+    }
+  }
+}
+
+export async function verifyPaymentSimulator(vaNumber: string) {
+  // Find a pending or unpaid transaction with the matching VA number
+  const pendingTxs = await prisma.transaction.findMany({
+    where: { 
+      status: { in: ['PENDING', 'UNPAID'] } 
+    }
+  })
+  
+  // Use a dynamic import or directly import utils if needed, but since we are in a server action,
+  // we can just implement the hash here or import from utils. Let's import from utils.
+  const { generateVaNumber } = await import('@/lib/utils');
+  
+  const tx = pendingTxs.find(t => generateVaNumber(t.id) === vaNumber);
+  
+  if (!tx) {
+    return { success: false, message: 'Virtual Account not found or already paid' };
+  }
+  
+  // Update status directly to COMPLETED since we skip CONFIRMED now
+  
+  await prisma.transaction.update({
+    where: { id: tx.id },
+    data: { status: 'COMPLETED' }
+  });
+
+  // Trigger email
+  try {
+    const transaction = await prisma.transaction.findUnique({
+      where: { id: tx.id },
+      include: {
+        user: { select: { name: true, email: true } },
+        bookingItems: { include: { room: { include: { homestay: true } } } }
+      }
+    })
+
+    if (transaction && transaction.user.email) {
+      const homestay = transaction.bookingItems[0]?.room.homestay
+      await sendBookingConfirmationEmail({
+        to: transaction.user.email,
+        userName: transaction.user.name,
+        homestayName: homestay?.name || 'Homestay',
+        homestayAddress: homestay?.address || '',
+        checkIn: transaction.checkIn,
+        checkOut: transaction.checkOut,
+        rooms: transaction.bookingItems.map(item => ({
+          roomNumber: item.room.roomNumber,
+          type: item.room.type,
+          priceAtBooking: item.priceAtBooking,
+        })),
+        totalPrice: transaction.totalPrice,
+        transactionId: transaction.id,
+      })
+    }
+  } catch (emailError) {
+    console.error('Failed to send confirmation email from simulator:', emailError)
+  }
+  
+  return { success: true, message: 'Payment successfully verified!' };
 }

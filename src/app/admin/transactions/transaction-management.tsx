@@ -105,38 +105,17 @@ export function TransactionManagement({
                       <td className="p-4 align-middle font-medium">{formatCurrency(tx.totalPrice)}</td>
                       <td className="p-4 align-middle">
                         <div className="flex flex-col gap-2">
-                          <Select 
-                            value={tx.status} 
-                            onValueChange={(val) => {
-                              if (val) handleStatusChange(tx.id, val)
-                            }}
+                          <Badge 
+                            variant={
+                              tx.status === 'COMPLETED' ? 'default' :
+                              tx.status === 'UNPAID' ? 'destructive' :
+                              tx.status === 'PENDING' ? 'outline' :
+                              tx.status === 'CANCELLED' ? 'secondary' : 'outline'
+                            }
+                            className="w-[100px] justify-center"
                           >
-                            <SelectTrigger className={`w-[130px] h-8 text-xs font-semibold ${
-                              tx.status === 'CONFIRMED' ? 'bg-blue-50 text-blue-800 border-blue-200' :
-                              tx.status === 'COMPLETED' ? 'bg-emerald-50 text-emerald-800 border-emerald-200' :
-                              tx.status === 'CANCELLED' ? 'bg-red-50 text-red-800 border-red-200' :
-                              'bg-yellow-50 text-yellow-800 border-yellow-200'
-                            }`}>
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="PENDING">Pending</SelectItem>
-                              <SelectItem value="CONFIRMED">Confirmed</SelectItem>
-                              <SelectItem value="COMPLETED">Completed</SelectItem>
-                              <SelectItem value="CANCELLED">Cancelled</SelectItem>
-                            </SelectContent>
-                          </Select>
-                          
-                          {tx.status === 'PENDING' && (
-                            <Button 
-                              size="sm" 
-                              variant="default"
-                              className="w-[130px] h-8 text-xs font-bold"
-                              onClick={() => handleStatusChange(tx.id, 'CONFIRMED')}
-                            >
-                              Simulate Payment
-                            </Button>
-                          )}
+                            {tx.status}
+                          </Badge>
                         </div>
                       </td>
                     </tr>

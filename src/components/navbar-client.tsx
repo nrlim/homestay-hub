@@ -64,6 +64,12 @@ export function NavbarClient({ user }: { user: any }) {
             )}>
               Find Stays
             </Link>
+            <Link href="/simulator" className={cn(
+              "text-sm font-medium transition-colors",
+              isTransparent ? "text-white hover:text-sky-200" : "text-zinc-600 hover:text-zinc-900"
+            )}>
+              Simulator
+            </Link>
             {user?.role === 'ADMIN' && (
               <Link href="/admin" className={cn(
                 "text-sm font-medium transition-colors",
@@ -128,6 +134,7 @@ export function NavbarClient({ user }: { user: any }) {
               <SheetTitle>Menu</SheetTitle>
               <div className="mt-6 flex flex-col gap-4">
                 <Link href="/homestays" className="text-lg font-medium">Find Stays</Link>
+                <Link href="/simulator" className="text-lg font-medium">Simulator</Link>
                 {user?.role === 'ADMIN' && (
                   <Link href="/admin" className="text-lg font-medium">Dashboard</Link>
                 )}

@@ -58,9 +58,10 @@ export default async function BookingsPage() {
                         </h3>
                         <Badge 
                           variant={
-                            transaction.status === 'CONFIRMED' ? 'default' :
-                            transaction.status === 'COMPLETED' ? 'secondary' :
-                            transaction.status === 'CANCELLED' ? 'destructive' : 'outline'
+                            transaction.status === 'COMPLETED' ? 'default' :
+                            transaction.status === 'UNPAID' ? 'destructive' :
+                            transaction.status === 'PENDING' ? 'outline' :
+                            transaction.status === 'CANCELLED' ? 'secondary' : 'outline'
                           }
                           className="ml-2"
                         >

@@ -36,6 +36,12 @@ export async function login(state: AuthFormState, formData: FormData): Promise<A
   }
 
   await createSession(user.id, user.role)
+
+  // If a next URL was provided (e.g. from booking flow), redirect there
+  const next = formData.get('next') as string | null
+  if (next && next.startsWith('/')) {
+    redirect(next)
+  }
   redirect(user.role === 'ADMIN' ? '/admin' : '/')
 }
 
@@ -79,6 +85,12 @@ export async function register(state: AuthFormState, formData: FormData): Promis
   }
 
   await createSession(user.id, user.role)
+
+  // If a next URL was provided (e.g. from booking flow), redirect there
+  const next = formData.get('next') as string | null
+  if (next && next.startsWith('/')) {
+    redirect(next)
+  }
   redirect('/')
 }
 

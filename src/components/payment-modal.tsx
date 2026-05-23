@@ -3,8 +3,8 @@
 import { useState } from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-import { formatCurrency } from '@/lib/utils'
-import { checkTransactionStatus } from '@/app/actions/transaction'
+import { formatCurrency, generateVaNumber } from '@/lib/utils'
+import { checkTransactionStatus, markTransactionAsUnpaid } from '@/app/actions/transaction'
 import { CheckCircle2, RefreshCw, CreditCard } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
@@ -24,15 +24,18 @@ export function PaymentModal({ isOpen, onOpenChange, transactionId, totalPrice }
     setIsChecking(true)
     try {
       const status = await checkTransactionStatus(transactionId)
-      if (status === 'CONFIRMED' || status === 'COMPLETED') {
+      if (status === 'COMPLETED' || status === 'CONFIRMED') {
         setIsSuccess(true)
         setTimeout(() => {
           onOpenChange(false)
           router.push('/bookings')
         }, 2000)
       } else {
-        // Just show it's still pending (the user will see no change, we could add a toast here, but keeping it simple)
+        // If unpaid, mark as UNPAID in database, don't block the user. Close the modal and redirect to bookings.
+        await markTransactionAsUnpaid(transactionId)
         setIsChecking(false)
+        onOpenChange(false)
+        router.push('/bookings')
       }
     } catch (e) {
       setIsChecking(false)
@@ -40,7 +43,7 @@ export function PaymentModal({ isOpen, onOpenChange, transactionId, totalPrice }
   }
 
   // Generate a fake Virtual Account number based on transaction ID
-  const fakeVaNumber = `8910${transactionId.replace(/\D/g, '').slice(0, 8) || '12345678'}`
+  const fakeVaNumber = generateVaNumber(transactionId)
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => {

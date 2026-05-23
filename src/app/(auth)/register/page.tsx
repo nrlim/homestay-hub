@@ -7,18 +7,31 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { useSearchParams } from 'next/navigation'
+import { CalendarCheck } from 'lucide-react'
 
 export default function RegisterPage() {
   const [state, formAction, pending] = useActionState(register, undefined)
+  const searchParams = useSearchParams()
+  const next = searchParams.get('next') || ''
 
   return (
     <form action={formAction}>
+      {/* Pass the next URL so the action can redirect back after registration */}
+      {next && <input type="hidden" name="next" value={next} />}
       <Card>
         <CardHeader>
           <CardTitle>Create an account</CardTitle>
           <CardDescription>Enter your details below to create your account.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
+          {/* Pending booking notice */}
+          {next && (
+            <div className="flex items-start gap-2.5 p-3 bg-emerald-50 border border-emerald-100 rounded-lg text-sm text-emerald-700">
+              <CalendarCheck className="h-4 w-4 mt-0.5 shrink-0" />
+              <span>Your booking selection has been saved. Register to continue.</span>
+            </div>
+          )}
           <div className="space-y-2">
             <Label htmlFor="name">Full Name</Label>
             <Input id="name" name="name" placeholder="John Doe" required />
@@ -50,7 +63,10 @@ export default function RegisterPage() {
           </Button>
           <div className="text-sm text-center text-zinc-500">
             Already have an account?{' '}
-            <Link href="/login" className="text-zinc-900 underline hover:text-zinc-700">
+            <Link 
+              href={next ? `/login?next=${encodeURIComponent(next)}` : '/login'} 
+              className="text-zinc-900 underline hover:text-zinc-700"
+            >
               Log in
             </Link>
           </div>

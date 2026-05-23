@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import prisma from '@/lib/prisma'
+import { getSession } from '@/lib/session'
 import { MapPin, BedDouble, Images, CheckCircle2 } from 'lucide-react'
 import { BookingForm } from '@/components/booking-form'
 
@@ -22,6 +23,9 @@ export default async function HomestayDetailPage(props: {
   if (!homestay) {
     notFound()
   }
+
+  const session = await getSession()
+  const isAuthenticated = !!session
 
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
@@ -108,7 +112,7 @@ export default async function HomestayDetailPage(props: {
         </div>
 
         <div className="lg:col-span-1">
-          <BookingForm rooms={homestay.rooms} />
+          <BookingForm rooms={homestay.rooms} homestayId={id} isAuthenticated={isAuthenticated} />
         </div>
       </div>
     </div>

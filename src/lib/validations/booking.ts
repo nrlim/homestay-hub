@@ -16,5 +16,6 @@ export type BookingFormState =
       message?: string
       transactionId?: string
       totalPrice?: number
+      redirectTo?: string
     }
   | undefined
