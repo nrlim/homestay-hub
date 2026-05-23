@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionState } from 'react'
+import { useActionState, useState } from 'react'
 import { register } from '@/app/actions/auth'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -8,10 +8,11 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { useSearchParams } from 'next/navigation'
-import { CalendarCheck } from 'lucide-react'
+import { CalendarCheck, Eye, EyeOff } from 'lucide-react'
 
 export default function RegisterPage() {
   const [state, formAction, pending] = useActionState(register, undefined)
+  const [showPassword, setShowPassword] = useState(false)
   const searchParams = useSearchParams()
   const next = searchParams.get('next') || ''
 
@@ -48,7 +49,26 @@ export default function RegisterPage() {
           </div>
           <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
-            <Input id="password" name="password" type="password" required />
+            <div className="relative">
+              <Input 
+                id="password" 
+                name="password" 
+                type={showPassword ? 'text' : 'password'} 
+                required 
+                className="pr-10"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-700 focus:outline-none"
+              >
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </button>
+            </div>
             {state?.errors?.password && (
               <p className="text-sm text-red-500">{state.errors.password[0]}</p>
             )}
